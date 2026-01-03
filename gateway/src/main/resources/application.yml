@@ -5,9 +5,20 @@ spring:
   application:
     name: Gateway
   cloud:
-    discovery:
-      enabled: true
+    # Configuration Consul
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        register: true      # S'enregistrer soi-même dans Consul
+        enabled: true
+        service-name: Gateway
+        # Optionnel : pour éviter les problèmes d'IP dans certains environnements
+        prefer-ip-address: true
 
-eureka:
-  instance:
-    hostname: localhost
+    # Configuration Spécifique à la Gateway pour utiliser Consul
+    gateway:
+      discovery:
+        locator:
+          enabled: true           # La magie opère ici : crée automatiquement les routes
+          lower-case-service-id: true # Permet d'accéder via /service-client au lieu de /SERVICE-CLIENT

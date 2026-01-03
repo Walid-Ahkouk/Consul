@@ -1,16 +1,25 @@
-server:
-  port: 8082
-
 spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: SERVICE-VOITURE
   application:
-    name: SERVICE-CAR
+    name: SERVICE-VOITURE
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/carservicedb?createDatabaseIfNotExist=true
-    username: "root"
-    password: ""
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/carservicedb
+    username: "postgres"
+    password: root
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8082
 
